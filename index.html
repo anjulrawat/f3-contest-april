@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Employees</title>
+	<script type="text/javascript">
+		var employees = [];
+		var id = 1;
+		function addEmployee() {
+			var name = document.getElementById("name").value;
+			var profession = document.getElementById("profession").value;
+			var age = document.getElementById("age").value;
+			if (name === "" || profession === "" || age === "") {
+				document.getElementById("error").innerHTML = "Please fill all the required fields.";
+				document.getElementById("success").innerHTML = "";
+				return;
+			}
+			var employee = {
+				id: id++,
+				name: name,
+				profession: profession,
+				age: age
+			};
+			employees.push(employee);
+			document.getElementById("name").value = "";
+			document.getElementById("profession").value = "";
+			document.getElementById("age").value = "";
+			showEmployees();
+			document.getElementById("error").innerHTML = "";
+			document.getElementById("success").innerHTML = "Employee added successfully.";
+		}
+		function showEmployees() {
+			var html = "<ul>";
+			for (var i = 0; i < employees.length; i++) {
+				var employee = employees[i];
+				html += "<li id='" + employee.id + "'>" + employee.name + " - " + employee.profession + " - " + employee.age + " <button onclick='deleteEmployee(" + employee.id + ")'>Delete</button></li>";
+			}
+			html += "</ul>";
+			document.getElementById("employees").innerHTML = html;
+		}
+		function deleteEmployee(id) {
+			for (var i = 0; i < employees.length; i++) {
+				if (employees[i].id === id) {
+					employees.splice(i, 1);
+					break;
+				}
+			}
+			document.getElementById(id).remove();
+		}
+	</script>
+	<style type="text/css">
+		.error {
+			color: red;
+		}
+		.success {
+			color: green;
+		}
+        *{
+            background-color: black;
+        }
+        h1{
+            color:white;
+            font-size: 4rem;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        h2{
+            color:white;
+            font-size: 4rem;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .form{
+            display: grid;
+        }
+        .label{
+            color: white;
+            size: 2rem;
+        }
+        .input{
+            color: white;
+        }
+        .btn{
+            border: 1px solid white;
+            background:white;
+            color: black;
+        }
+        #employees{
+            color: white;
+        }
+	</style>
+</head>
+<body>
+	<h1>Add Employees</h1>
+	<form class="form">
+		<label class="label" for="name">Name:</label>
+		<input class="input" type="text" id="name" required><br><br>
+		<label class="label" for="profession">Profession:</label>
+		<input class="input" type="text" id="profession" required><br><br>
+		<label class="label" for="age">Age:</label>
+		<input class="input" type="number" id="age" required><br><br>
+		<button class="btn" type="button" onclick="addEmployee()">Add Employee</button>
+	</form>
+	<div id="error" class="error"></div>
+	<div id="success" class="success"></div>
+	<h2>Added Employees</h2>
+	<div id="employees"></div>
+</body>
+</html>
